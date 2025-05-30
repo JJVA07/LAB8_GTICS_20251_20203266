@@ -1,15 +1,12 @@
 package com.example.lab8_gtics_20251_20203266.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class BlogPostDTO {
     private Long id;
 
@@ -20,6 +17,6 @@ public class BlogPostDTO {
     private String contenido;
 
     private String autor;
-    private LocalDateTime fechaPublicacion;
     private String categoria;
+    private LocalDateTime fechaPublicacion;
 }

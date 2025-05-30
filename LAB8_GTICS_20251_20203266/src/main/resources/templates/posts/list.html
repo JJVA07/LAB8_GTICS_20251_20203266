@@ -2,29 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Blog Personal</title>
+    <title>Mi Blog Personal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Entradas del Blog</h1>
-<a th:href="@{/posts/nuevo}">Crear Nueva Entrada</a>
+<div class="container mt-4">
+    <h1>Entradas del Blog</h1>
+    <a th:href="@{/posts/nuevo}" class="btn btn-primary mb-3">Crear Nueva Entrada</a>
 
-<div th:if="${posts.empty}">
-    <p>No hay entradas aún</p>
-</div>
+    <div th:if="${posts.empty}">
+        <p>No hay entradas en el blog todavía. ¡Crea una!</p>
+    </div>
 
-<div th:unless="${posts.empty}">
-    <table>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.titulo}"></td>
-            <td th:text="${post.autor} ?: 'Anónimo'"></td>
-            <td th:text="${post.fechaPublicacion}"></td>
-            <td>
-                <a th:href="@{/posts/editar/{id}(id=${post.id})}">Editar</a>
-                <a th:href="@{/posts/eliminar/{id}(id=${post.id})}"
-                   onclick="return confirm('¿Eliminar esta entrada?')">Eliminar</a>
-            </td>
-        </tr>
-    </table>
+    <div th:unless="${posts.empty}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Fecha de Publicación</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.titulo}"></td>
+                <td th:text="${post.autor} ?: 'Anónimo'"></td>
+                <td th:text="${#temporals.format(post.fechaPublicacion, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/posts/{id}(id=${post.id})}" class="btn btn-info btn-sm">Ver Completo</a>
+                    <a th:href="@{/posts/editar/{id}(id=${post.id})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/posts/eliminar/{id}(id=${post.id})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Estás seguro de eliminar esta entrada?');">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
